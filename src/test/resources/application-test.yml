@@ -1,0 +1,47 @@
+server:
+  port: 8095
+
+spring:
+  cash:
+    # cash expire time 12hr
+    default_expire_sec: 43200
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  config:
+    activate:
+      on-profile: test
+  application:
+    name: health
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test-db
+    username: sa
+    hikari:
+      auto-commit: false
+      connection-test-query: SELECT 1
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+        format_sql: true
+        show_sql: true
+    show-sql: true
+
+fitpet:
+  gateway:
+    fitpet-user: https://apiv3.fitpet.dev/h/fitpet-user
+    hospital: https://apiv3.fitpet.dev/api/hospitals
+    pet: http://localhost:8090/pet
+  aws:
+    bucket:
+      url: static.fitpetmall.dev
