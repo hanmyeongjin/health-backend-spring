@@ -70,7 +70,7 @@ internal class ItemServiceTest : DescribeSpec({
 
                 var itemListMock = listOf(mockItem1, mockItem2)
                 every { itemRepositorySupport.getOpenItemList(any()) } answers {
-                    PageImpl(itemListMock, PageRequest.of(0, 1),itemListMock.size.toLong())
+                    PageImpl(itemListMock, PageRequest.of(0, 1), itemListMock.size.toLong())
                 }
 
                 val itemList = itemService.getItemList(token, PageRequest.of(0, 10))
@@ -79,8 +79,8 @@ internal class ItemServiceTest : DescribeSpec({
                 itemList.result shouldBe itemListMock.map { it -> ItemResponse.getItemResponse(it) }
             }
             it("빈 아이템 리스트 리턴") {
-                val pageItem = PageImpl(mutableListOf<Item>(), PageRequest.of(0,10), 0L)
-                every { itemRepositorySupport.getOpenItemList(any()) }  returns pageItem
+                val pageItem = PageImpl(mutableListOf<Item>(), PageRequest.of(0, 10), 0L)
+                every { itemRepositorySupport.getOpenItemList(any()) } returns pageItem
 
                 val itemList = itemService.getItemList(token, PageRequest.of(0, 10))
 
