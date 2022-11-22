@@ -72,7 +72,9 @@ class ItemControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(uri).header("Authorization", userToken))
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.content().string("{\"count\":0,\"next\":\"\",\"previous\":\"\",\"result\":[]}"))
+            .andExpect(
+                MockMvcResultMatchers.content().string("{\"count\":0,\"next\":\"\",\"previous\":\"\",\"result\":[]}")
+            )
             .andDo(MockMvcResultHandlers.print())
     }
 
@@ -147,10 +149,12 @@ class ItemControllerTest {
 
         val uri = "/health/items/${saveItem.id}"
 
-        mockMvc.perform(MockMvcRequestBuilders.patch(uri)
-            .header("Authorization", userToken)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(content))
+        mockMvc.perform(
+            MockMvcRequestBuilders.patch(uri)
+                .header("Authorization", userToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        )
             .andExpect(MockMvcResultMatchers.status().isCreated)
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.name", `is`(copyItem.name)))
@@ -174,10 +178,12 @@ class ItemControllerTest {
 
         val content = objectMapper.writeValueAsString(copyItem)
 
-        mockMvc.perform(MockMvcRequestBuilders.patch(uri)
-            .header("Authorization", userToken)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(content))
+        mockMvc.perform(
+            MockMvcRequestBuilders.patch(uri)
+                .header("Authorization", userToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        )
             .andExpect(MockMvcResultMatchers.status().isBadRequest)
             .andDo(MockMvcResultHandlers.print())
     }
