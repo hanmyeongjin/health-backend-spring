@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Merge prod -> main
-        uses: devmasx/merge-branch@master
+        uses: devmasx/merge-branch@1.4.0
         with:
           type: now
           from_branch: prod
