@@ -12,7 +12,7 @@ import kr.co.fitpet.health.repository.user.UserRedisRepository
 import kr.co.fitpet.health.service.feign.UserFeignService
 import java.util.*
 
-internal class UserServiceTest: DescribeSpec({
+internal class UserServiceTest : DescribeSpec({
 
     val token = "GMH3VA5YY8FK1AFMF4J6FQ9PK2P67KBS0A9DR5VXAQAM5K2BC7DF0EHRXG12HE2M"
     val userDto = UserDto(
@@ -26,7 +26,6 @@ internal class UserServiceTest: DescribeSpec({
         displayPetType = "D"
     )
 
-
     val userRedisRepository = mockk<UserRedisRepository>()
     val userFeignService = mockk<UserFeignService>()
     val userService = UserService(userRedisRepository, userFeignService)
@@ -34,20 +33,20 @@ internal class UserServiceTest: DescribeSpec({
     describe("user cash test") {
         context("user cash") {
             it("cash 조회") {
-                 every { userRedisRepository.findById(token)} answers { Optional.of(UserCash(token, userDto)) }
-                 val findUser = userService.getUser(token)
+                every { userRedisRepository.findById(token) } answers { Optional.of(UserCash(token, userDto)) }
+                val findUser = userService.getUser(token)
 
                 findUser shouldBe userDto
             }
             it("API 조회") {
-                every { userRedisRepository.findById(token)} answers { Optional.empty() }
+                every { userRedisRepository.findById(token) } answers { Optional.empty() }
                 every { userFeignService.getUserInfoUseToken(token) } answers { userDto }
                 val findUser = userService.getUser(token)
 
                 findUser shouldBe userDto
             }
             it("없는 사용자 조회") {
-                every { userRedisRepository.findById(any())} answers { Optional.empty() }
+                every { userRedisRepository.findById(any()) } answers { Optional.empty() }
                 every { userFeignService.getUserInfoUseToken(any()) } answers { null }
 
                 shouldThrow<AuthorizationException> {
