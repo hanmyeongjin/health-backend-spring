@@ -15,4 +15,4 @@ jobs:
           type: now
           from_branch: prod
           target_branch: main
-          github_token: ${{ github.token }}
+          github_token: ${{ secrets.ACTION_TOKEN }}
